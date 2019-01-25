@@ -12,11 +12,10 @@ We will continue to build on top of this application throughout the week.
 Here's how the replacement works:
 
 The user enters something at the prompt: "my teacher hates me"
-
-The program will loop through that string and replace "my" with "your" and "me" with "you" and then prepend the qualifier to the replacement string.
+The program will loop through that string and replace "my" with "your" and "me" with "you".
 So, my teacher hates me becomes "Why do you say that your teacher hates you?"
 The replacement method returns the same words as the user entered only the replacement words have been swapped.
-Then the qualifier is prepended to the user's words.*/
+*/
 
 import java.util.Scanner;
 
@@ -39,34 +38,39 @@ public class elizaIntermediate {
             userQuit = checkQuitCommand(userResponse);
 
             // Swap out the words as needed
-            splitExample(userResponse);
-            String[] words = splitWords(userResponse);
-            elizaResponse = replaceWords(words);
+            elizaResponse = replaceWords(userResponse);
 
             System.out.println(elizaResponse);
-
+            System.out.println();
 
         }while (!userQuit);
 
         System.out.println(">>> END");
         input.close();
+        System.exit(0);
     }
-
 
     public static boolean checkQuitCommand(String r){
 
         boolean quit = false;
-        if (r.equalsIgnoreCase("Q") || r.equalsIgnoreCase("I am feeling great")){
+        if (r.equalsIgnoreCase("Q") || r.contains("i am feeling great")){
             quit = true;
         }
         return quit;
     }
 
-    public static String replaceWords(String[] words){
+    public static String replaceWords(String str){
 
-        String str = " ";
-        for(int i=0; i<words.length; i++){
-            String word = words[i];
+        String[] words = str.split(" ");
+        String newStr = "";
+
+        // Use shorthand to loop each element inside array
+        for(String word: words){
+            //    replace i with you
+            //    replace me with you
+            //    replace my with your
+            //    replace am with are
+
             if(word.equalsIgnoreCase("i")){
                 word = "you";
             }else if (word.equalsIgnoreCase("me")){
@@ -76,33 +80,14 @@ public class elizaIntermediate {
             }else if (word.equalsIgnoreCase("am")){
                 word = "are";
             }
-            str = words[i] + " ";
-        }
-        return str;
-    }
 
-    //    replace i with you
-    //    replace me with you
-    //    replace my with your
-    //    replace am with are
-    public static String[] splitWords(String r){
-        String[] str = new String[100];
-        for(String words: r.split(" ")){
-            for(int i=0; i<words.length(); i++){
-                str[i] = words;
-            }
+            // Concatenate the contents of the array back into a String
+            newStr += word + " ";
+
         }
-        return str;
+
+        return newStr;
 
     }
-
-
-    public static void splitExample(String r){
-            System.out.println("Return Value :" );
-
-            for (String retval: r.split(" ")) {
-                System.out.println(retval);
-            }
-        }
 
 }
